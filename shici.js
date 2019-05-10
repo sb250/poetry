@@ -505,7 +505,7 @@ const data = [
     "title": "尽心上"
   },
   {
-    "paragraph": "停车坐爱枫林晚，霜叶红于二月花。(www.lz13.cn)",
+    "paragraph": "停车坐爱枫林晚，霜叶红于二月花。",
     "author": "唐·杜牧",
     "title": "山行"
   },
