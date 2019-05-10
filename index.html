@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <meta charset="utf-8">
@@ -5,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>一起学诗词</title>
   <style>
+    * { box-sizing: border-box; }
     body, html {
       height: 100%;
       width: 100%;
@@ -22,47 +24,52 @@
     }
 
     .item {
-      /* display: inline-block; 
-      position: absolute;
-      */
       width: 100px;
       float: left;
-      border-radius: 5px;
-      line-height: 1;
+      line-height: 1.2;
       font-size: 10px;
+      border-radius: 5px;
       border: 2px solid #fff;
     }
 
+    .item:hover {
+      border: 2px solid #494747;
+    }
+
     .item .content {
-      padding: 8px;
+      padding: 6px;
     }
 
     #first {
       position: absolute;
       top: -200px!important;
       left: -200px!important;
+      display: none;
     }
 
     #stop {
       position: absolute;
       left: 50%;
       bottom: 10%;
+      display: none;
     }
 
     .meta {
       background: #494747;
       color: #fff;
-      padding: 4px 8px;
+      padding: 4px 6px;
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
     }
 
     .meta .author {
       color: #f7de1c;
+      font-weight: bold;
     }
 
     .meta .title {
       margin-left: 8px;
+      border-bottom: 1px dashed #fff;
     }
 
     .stop-inner {
@@ -85,30 +92,23 @@
     }
 
     .grid {
-  max-width: 100%;
-}
+      max-width: 100%;
+    }
 
-* { box-sizing: border-box; }
+    .grid:after {
+      content: '';
+      display: block;
+      clear: both;
+    }
 
-/* clearfix */
-.grid:after {
-  content: '';
-  display: block;
-  clear: both;
-}
+    .grid-item {
+      width: 120px;
+      float: left;
+    }
 
-/* ---- grid-item ---- */
-
-.grid-item {
-  width: 100px;
-  float: left;
-}
-
-.grid-item--width2 { width: 200px; }
-.grid-item--width3 { width: 300px; }
-.grid-item--width4 { width: 400px; }
-
-
+    .grid-item.two.wide {
+      width: 240px;
+    }
   </style>
   <body>
     <div class="container">
@@ -118,7 +118,7 @@
           够了(｡・`ω´・) 停！
         </div>
       </div>
-      <div id="app" class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 100 }'></div>
+      <div id="app" class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 120 }'></div>
         
     </div>
   </body>
@@ -142,28 +142,22 @@
 
     function resize (event) {
       var appW = app.innerWidth()
-      var margin = Math.floor(appW % 100 / 2)
+      var margin = Math.floor(appW % 120 / 2)
 
       app.css({'padding-left': margin + 'px'})
       app.css({'padding-right': margin + 'px'})
     }
   
-    function play () {
-      var top = Math.floor(Math.random() * appH);
-      var left = Math.floor(Math.random() * appW);
-      var huaIndex = Math.floor(Math.random() * data.length);
-  
+    data.forEach((shici, index) => {
       var color = "#000"
   
       var bgcolor = randomColor({
         luminosity: 'light',
         format: 'rgba',
-        alpha: 1,
+        alpha: 0.8,
       });
   
-      var colorStyle = 'background-color: ' + bgcolor + '; color: ' + color + ';'
-
-      var shici = data[huaIndex]
+      var colorStyle = 'background-color: ' + bgcolor + '; color: #000;'
 
       var content = '<div class="content">' + shici.paragraph + '</div>'
 
@@ -177,26 +171,30 @@
       }
 
       content += '</div>'
-      
 
-      var $items = $('<div class="grid-item item" style="' + colorStyle + '">' + content + '</div>');
-      
-      $('.grid').append($items).masonry( 'appended', $items)
-    }
+      var wClass = 'one'
 
-    var light = true;
-    var intervalId = setInterval(play, 500);
-
-    stop.on('click', function () {
-      if (!light) {
-        intervalId = setInterval(play, 500);
-        $(this).find('.stop-inner').html("够了(｡・`ω´・) 停！")
-      } else {
-        clearInterval(intervalId)
-        $(this).find('.stop-inner').html("╰(*°▽°*)╯ 继续..")
+      if (shici.paragraph.length > 24) {
+        wClass = 'two'
       }
-      light = !light
+
+      var $items = $('<div class="grid-item item wide ' + wClass + '" style="' + colorStyle + '">' + content + '</div>');
+      
+      $('.grid').append($items) //.masonry( 'appended', $items)
     })
+
+    // var light = true;
+    // var intervalId = setInterval(play, 500);
+    // stop.on('click', function () {
+    //   if (!light) {
+    //     intervalId = setInterval(play, 500);
+    //     $(this).find('.stop-inner').html("够了(｡・`ω´・) 停！")
+    //   } else {
+    //     clearInterval(intervalId)
+    //     $(this).find('.stop-inner').html("╰(*°▽°*)╯ 继续..")
+    //   }
+    //   light = !light
+    // })
 
     resize()
 
