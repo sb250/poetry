@@ -102,12 +102,12 @@
     }
 
     .grid-item {
-      width: 120px;
+      width: 100px;
       float: left;
     }
 
     .grid-item.two.wide {
-      width: 240px;
+      width: 200px;
     }
   </style>
   <body>
@@ -118,7 +118,7 @@
           够了(｡・`ω´・) 停！
         </div>
       </div>
-      <div id="app" class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 120 }'></div>
+      <div id="app" class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 100 }'></div>
         
     </div>
   </body>
@@ -142,7 +142,7 @@
 
     function resize (event) {
       var appW = app.innerWidth()
-      var margin = Math.floor(appW % 120 / 2)
+      var margin = Math.floor(appW % 100 / 2)
 
       app.css({'padding-left': margin + 'px'})
       app.css({'padding-right': margin + 'px'})
